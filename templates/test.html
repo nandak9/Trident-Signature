@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <br/>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-1 col-sm-1 col-md-3 col-lg-3"></div>
+            <div class="col-xs-10 col-sm-10 col-md-6 col-lg-6">
+                {% if completed %}
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>Thank You</strong> You have successfully completed this form.
+                </div>
+                {% endif %}
+                <div class="panel panel-default mouse_signature">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Basic Information</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form action="/" method="POST" role="form" id="emp_form">
+                            <div class="form-group">
+                                <label for="">Employee ID</label>
+                                <input type="text" class="form-control signature" id="emp_id" name="emp_id" required="required" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Name</label>
+                                <input type="text" class="form-control signature" id="name" name="name" placeholder="Your Full Name" required="required" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Email</label>
+                                <input type="email" class="form-control signature" id="email" name="email" placeholder="Corporate Email Address" required="required" autocomplete="off">
+                            </div>
+                            <canvas id="myCanvas"></canvas>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-3 col-lg-3"></div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- <script src="/static/js/javascript_converted.js"></script> -->
+    <script type="text/javascript">
+    //mouse_timer
+    var mouseStartTime = Date.now();
+
+    function mouseStartTimer() {
+        mouseStartTime = Date.now();
+
+    }
+
+    function mouseStopTimer() {
+        var elapsedTime = Date.now() - mouseStartTime;
+        return elapsedTime;
+    }
+
+    //keyboard_timer
+    var startTime = Date.now();
+    var jumpStartTime = Date.now();
+    var index = 0;
+    var keyArray = [];
+    var mouseEvents = [];
+
+    function startTimer() {
+        var jumpElapsedTime = Date.now() - jumpStartTime;
+        jumpMillis = jumpElapsedTime;
+        startTime = Date.now();
+        return jumpMillis;
+    }
+
+    function stopTimer() {
+        var elapsedTime = Date.now() - startTime;
+        millis = elapsedTime;
+        jumpStartTime = Date.now();
+        return millis;
+    }
+
+    // function checkFont(strFamily) {
+    //     var objDiv = document.createElement('div');
+    //     objDiv.setAttribute("style", "font-family: " + strFamily + ";");
+    //     objDiv.appendChild(document.createTextNode('FONT TEST'));
+
+    //     if (window.getComputedStyle) {
+    //         console.log(window.getComputedStyle(objDiv).getPropertyValue('font-family'));
+    //         return window.getComputedStyle(objDiv, null).getPropertyValue('font-family') === strFamily;
+    //     }
+    //     return objDiv.currentStyle.fontFamily === strFamily;
+    // }
+
+    window.mobilecheck = function() {
+        var check = false;
+        (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+        return check;
+    };
+
+    (function (document) {
+      var width;
+      var body = document.body;
+
+      var container = document.createElement('span');
+      container.innerHTML = Array(100).join('wi');
+      container.style.cssText = [
+        'position:absolute',
+        'width:auto',
+        'font-size:128px',
+        'left:-99999px'
+      ].join(' !important;');
+
+      var getWidth = function (fontFamily) {
+        container.style.fontFamily = fontFamily;
+
+        body.appendChild(container);
+        width = container.clientWidth;
+        body.removeChild(container);
+
+        return width;
+      };
+
+      // Pre compute the widths of monospace, serif & sans-serif
+      // to improve performance.
+      var monoWidth  = getWidth('monospace');
+      var serifWidth = getWidth('serif');
+      var sansWidth  = getWidth('sans-serif');
+
+      window.isFontAvailable = function (font) {
+        return monoWidth !== getWidth(font + ',monospace') ||
+          sansWidth !== getWidth(font + ',sans-serif') ||
+          serifWidth !== getWidth(font + ',serif');
+      };
+    })(document);
+
+    $(".signature").keydown(function(event) {
+        jumpTicks = startTimer();
+        keyArray[index] = {};
+        keyArray[index]["id"] = $(this).attr("id");
+        keyArray[index]["keyCode"] = event.keyCode;
+        keyArray[index]["jumpTicks"] = jumpTicks;
+        keyArray[index]["keyUpTicks"] = 0;
+        // console.log(String.fromCharCode(event.keyCode));
+        // console.log('jumpTicks '+jumpTicks);
+    });
+
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.shadowOffsetX = 0.2;
+    ctx.shadowOffsetY = 0.3;
+    ctx.shadowColor = 'black';
+    ctx.shadowBlur = 9.0;
+    ctx.beginPath();
+    ctx.moveTo(50, 20);
+    ctx.bezierCurveTo(20, 30, 150, 80, 150, 100);
+    ctx.bezierCurveTo(150, 30, 150, 60, 50, 100);
+    ctx.stroke();
+
+
+    var gradient = ctx.createLinearGradient(10, 0, 500, 0);
+    gradient.addColorStop(0, 'red');
+    gradient.addColorStop(1 / 6, 'orange');
+    gradient.addColorStop(2 / 6, 'yellow');
+    gradient.addColorStop(3 / 6, 'green');
+    gradient.addColorStop(4 / 6, 'blue');
+    gradient.addColorStop(5 / 6, 'indigo');
+    gradient.addColorStop(1, 'violet');
+    ctx.font = "20px Arial";
+    ctx.fillStyle = gradient;
+    ctx.fillText("Cwm fjordbank glyphs vext quiz, &#x2660;", 10, 50);
+    var canvas_signature = c.toDataURL();
+    ctx.clearRect(0, 0, c.width, c.height);
+
+    // alert(signature);
+    // console.log(signature);
+    // var shaObj = new jsSHA("SHA-256",signature,"HEX");
+
+    // alert(shaObj);
+
+    var navi_keys = {};
+    navi_keys["cookieEnabled"] = navigator.cookieEnabled;
+    navi_keys["appName"] = navigator.appName;
+    navi_keys["product"] = navigator.product;
+    navi_keys["appCodeName"] = navigator.appCodeName;
+    navi_keys["appVersion"] = navigator.appVersion;
+    navi_keys["userAgent"] = navigator.userAgent;
+    navi_keys["platform"] = navigator.platform;
+    navi_keys["onLine"] = navigator.onLine;
+    navi_keys["javaEnabled"] = navigator.javaEnabled();
+    navi_keys["height"] = window.screen.availHeight;
+    navi_keys["width"] = window.screen.availWidth;
+    navi_keys["localStorage"] = window.localStorage || 0;
+    navi_keys['colorDepth'] = window.screen.colorDepth;
+    navi_keys['doNotTrack'] = window.navigator.doNotTrack;
+    navi_keys['hardwareConcurrency'] = window.navigator.hardwareConcurrency;
+    var userLang = navigator.language || navigator.userLanguage;
+    navi_keys['language'] = userLang;
+    navi_keys["canvas"] = canvas_signature;
+    var d = new Date();
+    navi_keys["timezone"] = d.getTimezoneOffset();
+    navi_keys['']
+
+    var canvas = document.createElement('canvas');
+    // We get a WebGL drawing context to get access to the functions of the API
+    var ctx = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    webGLVendor = "";
+    webGLRenderer = "";
+    // If the debug extension is present , we collect the information
+    // If not , we say it is not supported
+    if (ctx.getSupportedExtensions().indexOf("WEBGL_debug_renderer_info") >= 0) {
+        var debugExt = ctx.getExtension('WEBGL_debug_renderer_info');
+        webGLVendor = ctx.getParameter(debugExt.UNMASKED_VENDOR_WEBGL);
+        webGLRenderer = ctx.getParameter(debugExt.UNMASKED_RENDERER_WEBGL);
+    } else {
+        webGLVendor = " Not supported ";
+        webGLRenderer = "Not supported ";
+    }
+    navi_keys["productSub"] = navigator.productSub;
+    navi_keys["maxTouchPoints"] = navigator.maxTouchPoints;
+    navi_keys["connection_downlink"] = "";
+    navi_keys["connection_effectiveType"] = "";
+    navi_keys["connection_rtt"] = "";
+    if (navigator.connection != undefined) {
+        navi_keys["connection_downlink"] = navigator.connection['downlink'];
+        navi_keys["connection_effectiveType"] = navigator.connection['effectiveType'];
+        navi_keys["connection_rtt"] = navigator.connection['rtt'];
+    }
+    navi_keys["webGLVendor"] = webGLVendor;
+    navi_keys["webGLRenderer"] = webGLRenderer;
+    // navi_keys["plugins"] = navigator.plugins;
+    var plugins = [];
+    for (var i in navigator.plugins) {
+        plugins.push(navigator.plugins[i].name);
+    }
+    navi_keys["plugins"] = plugins;
+    var mimeTypes = [];
+    for (var i in navigator.mimeTypes) {
+        mimeTypes.push(navigator.mimeTypes[i].type);
+    }
+    navi_keys["mimetypes"] = mimeTypes;
+    navi_keys["vendor"] = navigator.vendor;
+    var fonts = [];
+    var font_list = ["Agency FB", "Arial Black", "Arial", "Bauhaus 93", "Bell MT", "Bodoni MT", "Bookman Old Style", "Broadway", "Calibri Light", "Calibri", "Californian FB", "Cambria Math", "Cambria", "Candara", "Castellar", "Centaur", "Century Gothic", "Colonna MT", "Comic Sans MS", "Consolas", "Constantia", "Copperplate Gothic Light", "Corbel", "Courier New", "Ebrima", "Engravers MT", "Forte", "Franklin Gothic Heavy", "Franklin Gothic Medium", "French Script MT", "Gabriola", "Georgia", "Gigi", "Goudy Old Style", "Haettenschweiler", "Harrington", "Impact", "Informal Roman", "Lucida Bright", "Lucida Console", "Lucida Fax", "Lucida Sans Unicode", "MS Gothic", "MS PGothic", "MS Reference Sans Serif", "MS UI Gothic", "MV Boli", "Magneto", "Malgun Gothic", "Marlett", "Matura MT Script Capitals", "Microsoft Himalaya", "Microsoft JhengHei", "Microsoft New Tai Lue", "Microsoft PhagsPa", "Microsoft Sans Serif", "Microsoft Tai Le", "Microsoft YaHei", "Microsoft Yi Baiti", "MingLiU-ExtB", "MingLiU_HKSCS-ExtB", "Mongolian Baiti", "NSimSun", "Niagara Solid", "PMingLiU-ExtB", "Palace Script MT", "Palatino Linotype", "Papyrus", "Perpetua", "Playbill", "Rockwell", "Segoe Print", "Segoe Script", "Segoe UI Light", "Segoe UI Semibold", "Segoe UI Symbol", "Segoe UI", "Showcard Gothic", "SimSun", "SimSun-ExtB", "Snap ITC", "Sylfaen", "Symbol", "Tahoma", "Times New Roman", "Trebuchet MS", "Verdana", "Vladimir Script", "Webdings", "Wide Latin", "Wingdings"];
+
+    for (var font in font_list) {
+        var isInstalled = isFontAvailable(font_list[font]);
+
+        if (isInstalled) {
+            console.log(font_list[font]);
+            console.log(' is available');
+            fonts.push(font_list[font]);
+        } else {
+            console.log(font_list[font]);
+            console.log(' is not available');
+        }
+
+        // checkFont(font);
+
+        // // if () {
+        // //     fonts.push(font);
+        // // }
+    }
+    navi_keys['fonts'] = fonts;
+
+    $("#emp_form").append("<input type='hidden' name='navigator' id='navigator' value='" + JSON.stringify(navi_keys) + "'/>");
+        var channel = "WEB";
+        if (window.mobilecheck()) {
+            channel = "MOBILE_WEB"
+        }
+    $("#emp_form").append("<input type='hidden' name='channel' id='channel' value='"+channel+"'/>");
+    $(".signature").keyup(function(event) {
+        ticks = stopTimer();
+        if (keyArray[index] == null) {
+            jumpTicks = startTimer();
+            keyArray[index] = {};
+            keyArray[index]["id"] = $(this).attr("id");
+            keyArray[index]["keyCode"] = event.keyCode;
+            keyArray[index]["keyUpTicks"] = ticks;
+            keyArray[index]["jumpTicks"] = jumpTicks;
+        } else {
+            keyArray[index]["keyUpTicks"] = ticks;
+        }
+        if ($("#mouseEvents").val() == undefined) {
+            $("#emp_form").append("<input type='hidden' name='mouseEvents' id='mouseEvents' value='" + JSON.stringify(mouseEvents) + "'/>");
+        } else {
+            $("#mouseEvents").val(JSON.stringify(mouseEvents));
+        }
+        index += 1;
+        // console.log(String.fromCharCode(event.keyCode));
+        // console.log(keyArray);
+        console.log(navigator.userAgent);
+        // console.log(navigator.plugins);
+        // console.log(navigator);
+        // console.log('ticks '+ticks);
+    });
+
+    $(".mouse_signature").mousemove(function(event) {
+        mouseEvents.push({ 'x': event.clientX, 'y': event.clientY, 'timestamp': Date.now() });
+        if ($("#keyArrayField").val() == undefined) {
+            $("#emp_form").append("<input type='hidden' name='keyArray' id='keyArrayField' value='" + JSON.stringify(keyArray) + "'/>");
+        } else {
+            $("#keyArrayField").val(JSON.stringify(keyArray));
+        }
+    });
+    </script>
+</body>
+
+</html>

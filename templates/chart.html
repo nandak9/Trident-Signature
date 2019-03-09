@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+
+<body>
+    <br/>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-1 col-sm-1 col-md-3 col-lg-3">
+                <label>Employee ID</label>
+                <select name="" id="user1_id" class="form-control" required="required">
+                    <option value="MYP1007">MYP1007</option>
+                </select>
+                <label>Mouse Feature</label>
+                <select name="" id="mouse_feature" class="form-control" required="required">
+                    <option value="mouse_action_per_direction">Mouse Percentage Action</option>
+                    <option value="mouse_movement_per_direction">Mouse Percentage Movement</option>
+                    <option value="mouse_time_per_direction">Mouse Percentage Time</option>
+                </select>
+                <br/>
+                <label>Keyboard Feature</label>
+                <select name="" id="keyboard_feature" class="form-control" required="required">
+                    <option value="mean_dwell_time">Mean Dwell Time</option>
+                    <option value="mean_flight_time">Mean Flight Time</option>
+                    <option value="mean_trigraph_time">Mean Trigraph Time</option>
+                </select>
+                <button type="button" class="btn btn-primary" id="sub_button">Submit</button>
+            </div>
+            <div class="col-xs-10 col-sm-10 col-md-6 col-lg-6">
+                <canvas id="scatter_plot" width="200" height="200"></canvas>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-3 col-lg-3"></div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+};
+
+    
+        $("#sub_button").click(function(event) {
+            
+            $.ajax({
+                    url: '/analysis',
+                    type: 'POST',
+                    data: {
+                        mouse_feature: $('#mouse_feature option:selected').val(),
+                        keyboard_feature: $('#keyboard_feature option:selected').val(),
+                        user1_id: $('#user1_id option:selected').val(),
+                    },
+                })
+                .done(function(response) {
+                    var ctx = document.getElementById("scatter_plot");
+                    var myChart = new Chart(ctx, {
+                        type: 'scatter',
+                        data: {
+                            labels: response.labels,
+                            datasets: [{
+                                borderColor: window.chartColors.red,
+                                data: response.response
+                            }]
+                        },
+                        options: {
+                            legend: {
+                                display: true,
+                                position: "right"
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    
+                    myChart.update();
+                    console.log(myChart);
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+        });
+    
+   
+    </script>
+</body>
+
+</html>
